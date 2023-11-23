@@ -1,0 +1,39 @@
+\mode<presentation> {
+\usetheme{Berlin}
+\colorlet{themecolor}{green!50!blue}
+\colorlet{beamer@blendedblue}{themecolor}
+\setbeamertemplate{page number in head/foot}[totalframenumber]
+\makeatletter
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip2pt\insertnavigation{\paperwidth}\vskip2pt
+  \end{beamercolorbox}%
+  %\ifbeamer@theme@subsection%
+  \begin{beamercolorbox}[colsep=1.5pt]{middle separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}\usebeamerfont{subsection in head/foot}\insertsubsectionhead%\hfill{\usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}\usebeamertemplate{page number in head/foot}}
+  \end{beamercolorbox}%
+  %\fi%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+  \end{beamercolorbox}
+}
+\setbeamertemplate{footline}
+{%
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \hfill\usebeamerfont{author in head/foot}{\usebeamerfont{author in head/foot}\usebeamercolor[fg]{author in head/foot}\insertshortauthor}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+    \usebeamerfont{date in head/foot}{\usebeamerfont{shorttitle in head/foot}\usebeamercolor[fg]{shorttitle in head/foot}\insertshorttitle}%\hfill{\usebeamerfont{page number in head/foot}\usebeamercolor[fg]{page number in head/foot}\usebeamertemplate{page number in head/foot}}
+  \end{beamercolorbox}%
+  }%
+}
+\makeatother
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{bibliography item}{}
+}
