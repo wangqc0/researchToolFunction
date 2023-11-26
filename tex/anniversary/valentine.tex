@@ -1,0 +1,82 @@
+\documentclass[compress]{beamer}
+
+\input{../beamer_preset.tex}
+\colorlet{valentine}{red!70!blue!70}
+\colorlet{beamer@blendedblue}{valentine}
+\usepackage{tikz}
+\titlegraphic{
+\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=center,yshift=-80pt] at (current page.center) {\includegraphics[scale=0.2]{valentine.png}};
+\end{tikzpicture}
+}
+\addtobeamertemplate{frametitle}{}{
+\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=north east,yshift=-22pt] at (current page.north east) {\includegraphics[scale=0.1]{valentine.png}};
+\end{tikzpicture}
+}
+
+%\usepackage{xeCJK}
+%\setCJKmainfont{Songti SC}
+\usepackage{ebgaramond}
+\usepackage[english]{isodate}
+\cleanlookdateon
+%\usepackage{graphicx}
+%\usepackage{booktabs}
+%\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{caption}
+%\usepackage{float}
+%\usepackage{mathtools}
+%\usepackage{xr-hyper}
+%\usepackage{setspace}
+%\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+\title[ECON3123, Spring 2023]{Tutorial}
+\author{Qichao Wang}
+\institute[HKUST]{Hong Kong University of Science and Technology, Department of Economics}
+\date{14 February 2023}
+
+%\usepackage{hyperref}
+%\usepackage[style=apa]{biblatex}
+%\addbibresource{ref.bib}
+%\AtBeginBibliography{\tiny}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%\subsection*{Outline}
+
+%\begin{frame}
+%\frametitle{Overview}
+%\tableofcontents
+%\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{About me}
+
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+%\begin{frame}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=.8\textwidth]{}
+%	\caption{}
+%\end{figure}
+%\end{frame}
+ 
+%\begin{frame}[allowframebreaks]
+%\frametitle{References}
+%\nocite{*}
+%\printbibliography
+%\end{frame}
+
+\end{document}
