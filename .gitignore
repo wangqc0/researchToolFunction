@@ -35,3 +35,11 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# texpad temporary files #
+##########################
+**/.texpadtmp/
+
+# archive #
+###########
+tex/macro_buddhism/archive/
