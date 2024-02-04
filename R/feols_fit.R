@@ -41,7 +41,8 @@ feols_fit <-
     # fit rows with NA by fixed-effect-interpolation
     if (fit_all) {
       df[, name_fitted_variable[3]] <- df[, name_fitted_variable[2]]
-      df_na <- df[is.na(df[[variable_of_interest]]), variable_fixed_effect]
+      df_na <- as.data.frame(df[is.na(df[[variable_of_interest]]), variable_fixed_effect])
+      colnames(df_na) <- variable_fixed_effect
       variable_of_interest_na_fit <- c()
       for (j in 1:nrow(df_na)) {
         variable_of_interest_na_fit_j <- 0
