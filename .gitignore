@@ -43,3 +43,8 @@ Thumbs.db
 # archive #
 ###########
 tex/macro_buddhism/archive/
+
+# offline files #
+###########
+tex/anniversary
+tex/macro_buddhism
