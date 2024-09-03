@@ -55,7 +55,7 @@ function [beta, aic, beta_draw] = local_projection(y, x, yy, W, fe_dummy, ind_di
     aic = log(2 * pi) + log(mean(u .^ 2)) + 2 * size(beta, 1) / T;
     if n_draw > 0
         nvar_X = size(X, 2);
-        if method_draw == "mc"
+        if (method_draw == "mc" || method_draw == "nw")
             EXX = X' * X;
             %EXX = mean(pagemtimes(pagetranspose(reshape(X', nvar_X, 1, T)), reshape(X', nvar_X, 1, T)), 3);
             % LRV: Newey-West kernel
@@ -67,7 +67,14 @@ function [beta, aic, beta_draw] = local_projection(y, x, yy, W, fe_dummy, ind_di
             LRV = reshape(sum(LRV .* kappa, 1), nvar_X, nvar_X) * T;%
             Sigma_beta = ((eye(size(EXX)) / (EXX)) * LRV * (eye(size(EXX)) / (EXX))) / T;
             Sigma_beta = tril(Sigma_beta) + transpose(tril(Sigma_beta)) - diag(diag(Sigma_beta));
-            beta_draw = mvnrnd(beta, Sigma_beta, n_draw);
+            if method_draw == "mc"
+                beta_draw = mvnrnd(beta, Sigma_beta, n_draw);
+            elseif method_draw == "nw"
+                beta_draw.se = sqrt(diag(Sigma_beta))';
+                beta_draw.df = T - nvar_X;
+            else
+                beta_draw = [];
+            end
         elseif method_draw == "bs"
             bs_index = ceil(rand(T, n_draw) * T);
             bs_index(bs_index == 0) = 1;

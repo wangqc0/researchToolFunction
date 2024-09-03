@@ -14,7 +14,7 @@ function [beta_0_response, beta_0_response_lower, beta_0_response_upper, m_aic_a
         q_max (1, 1) {mustBeInteger} = 4
         r_max (1, 1) {mustBeInteger} = 1
         n_draw (1, 1) {mustBeInteger} = 1000
-        method_draw (1, 1) {mustBeMember(method_draw, {'mc', 'bs'})} = "mc"
+        method_draw (1, 1) {mustBeMember(method_draw, {'mc', 'bs', 'nw'})} = "mc"
     end
     if size(Y, 1) ~= size(x, 1)
         error("The row size of response and shock must be equal")
@@ -85,9 +85,16 @@ function [beta_0_response, beta_0_response_lower, beta_0_response_upper, m_aic_a
             for h = min_delay:(h_max + min_delay)
                 [beta, ~, beta_draw] = local_projection(y, x, yy, W, fe_dummy, any(i_response == ind_diff), subsample, h, m_min, m_aic, q_min, q_aic, r_min, r_max, n_draw, method_draw);
                 beta_0 = beta(1);
-                beta_0_draw = beta_draw(:, 1);
-                beta_0_lower = prctile(beta_0_draw, (100 - irf_band_confidence) / 2);
-                beta_0_upper = prctile(beta_0_draw, 100 - (100 - irf_band_confidence) / 2);
+                if (method_draw == "mc" || method_draw == "bs")
+                    beta_0_draw = beta_draw(:, 1);
+                    beta_0_lower = prctile(beta_0_draw, (100 - irf_band_confidence) / 2);
+                    beta_0_upper = prctile(beta_0_draw, 100 - (100 - irf_band_confidence) / 2);
+                elseif method_draw == "nw"
+                    t_df = tinv((100 - (100 - irf_band_confidence) / 2) / 100, beta_draw.df);
+                    beta_0_draw = beta_draw.se(:, 1);
+                    beta_0_lower = beta_0 - t_df * beta_0_draw;
+                    beta_0_upper = beta_0 + t_df * beta_0_draw;
+                end
                 % adjust the band by the point estimate
                 if method_draw == "bs"
                     beta_0_bandwidth = (beta_0_upper - beta_0_lower) / 2;
@@ -144,13 +151,23 @@ function [beta_0_response, beta_0_response_lower, beta_0_response_upper, m_aic_a
             for h = min_delay:(h_max + min_delay)
                 [beta, ~, beta_draw] = local_projection(y, x, yy, W, fe_dummy, any(i_response == ind_diff), subsample, h, [m_1_min; m_2_min], [m_1_aic; m_2_aic], q_min, q_aic, r_min, r_max, n_draw, method_draw);
                 beta_0_1 = beta(1);
-                beta_0_1_draw = beta_draw(:, 1);
-                beta_0_1_lower = prctile(beta_0_1_draw, (100 - irf_band_confidence) / 2);
-                beta_0_1_upper = prctile(beta_0_1_draw, 100 - (100 - irf_band_confidence) / 2);
                 beta_0_2 = beta(2);
-                beta_0_2_draw = beta_draw(:, 2);
-                beta_0_2_lower = prctile(beta_0_2_draw, (100 - irf_band_confidence) / 2);
-                beta_0_2_upper = prctile(beta_0_2_draw, 100 - (100 - irf_band_confidence) / 2);
+                if (method_draw == "mc" || method_draw == "bs")
+                    beta_0_1_draw = beta_draw(:, 1);
+                    beta_0_1_lower = prctile(beta_0_1_draw, (100 - irf_band_confidence) / 2);
+                    beta_0_1_upper = prctile(beta_0_1_draw, 100 - (100 - irf_band_confidence) / 2);
+                    beta_0_2_draw = beta_draw(:, 2);
+                    beta_0_2_lower = prctile(beta_0_2_draw, (100 - irf_band_confidence) / 2);
+                    beta_0_2_upper = prctile(beta_0_2_draw, 100 - (100 - irf_band_confidence) / 2);
+                elseif method_draw == "nw"
+                    t_df = tinv((100 - (100 - irf_band_confidence) / 2) / 100, beta_draw.df);
+                    beta_0_1_draw = beta_draw.se(:, 1);
+                    beta_0_1_lower = beta_0_1 - t_df * beta_0_1_draw;
+                    beta_0_1_upper = beta_0_1 + t_df * beta_0_1_draw;
+                    beta_0_2_draw = beta_draw.se(:, 2);
+                    beta_0_2_lower = beta_0_2 - t_df * beta_0_2_draw;
+                    beta_0_2_upper = beta_0_2 + t_df * beta_0_2_draw;
+                end
                 % adjust the band by the point estimate
                 if method_draw == "bs"
                     beta_0_1_bandwidth = (beta_0_1_upper - beta_0_1_lower) / 2;
