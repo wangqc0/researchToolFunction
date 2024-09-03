@@ -1,0 +1,21 @@
+\newcommand{\setbeamerthemecolor}[1][green!50!black]{
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{section in toc}[square]
+\setbeamertemplate{itemize item}{\textcolor{#1}{\textbullet}}
+\setbeamertemplate{itemize subitem}{\textcolor{#1}{\textbullet}}
+\setbeamertemplate{itemize subsubitem}{\textcolor{#1}{\textbullet}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
+\setbeamertemplate{enumerate subsubitem}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
+
+\setbeamertemplate{section in toc}{\leavevmode\leftskip=1.75ex%
+  \llap{%
+    \textbullet
+    \hskip-2.25ex
+    \hbox to2.25ex{\hfil\color{fg}\hfil}}%
+  \kern1.25ex\inserttocsection\par}
+
+\newcommand{\answer}{\textcolor{#1}}
+}
+\newcommand{\answeritem}[1]{\item{\answer{#1}}}
+%\setbeamercolor{section number projected}{fg=}
